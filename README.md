@@ -1,15 +1,20 @@
 # raidify_ultra 
 
-A golang program that generates a WoW Classic (Era, TBC, Forever, etc.) CSV-formatted priority list according to the ULTRA algorithm using data from your guild's [Raidify](https://raidify.app) integration.  If you're not already using Raidify to manage your guild's raid signups, loot and raid history, you might be doing it wrong.
+A golang command line utility that generates a WoW Classic (Era, TBC, Forever, etc.) priority spreadsheet using data from your guild's [Raidify](https://raidify.app) integration.  If you're not already using Raidify to manage your guild's raiding endeavors, you might be doing it wrong.  
 
-Raidify already connects to your discord server, warcraftlogs.com, and the Blizzard API to gather the data needed by ULTRA, so all you need to run this program is your raidify API key and optionally a discord hook to post ULTRA outputs plugged into your config.ini file.  
+Raidify already connects to your Discord server, warcraftlogs.com, and the Blizzard API to gather the data needed by ULTRA, so all you need to run this utility is your Raidify API key and optionally a Discord webhook to post ULTRA outputs for maximum transparency.  
 
 ## Installing & using raidify_ultra
 
 - Clone this repo, build it yourself with "go build", or download a pre-built binary for your system from the releases page.
-- Plug in your raidify API key into the .ini file, and run it.  
+- Plug in your Raidify API key (and a Discord webhook, if you want) into the .ini file, and run it.  
+- Managing multiple guilds?  You can specify a different config file with --config=someOtherConfig.ini
+- Testing and don't want to post to Discord?  Add --discord=false to the command line.
+- You can tweak the weights and prio eligibility thresholds in the .ini file.
 
-It will fetch wishlists, loot history, and raid attendance from raidify.app and output a new .csv file you can use to set up your prio lists on raidify.app.  
+It will fetch wishlists, loot history, and raid attendance from raidify.app and output a new .csv file you can use to set up your prio lists on raidify.app.  The spreadsheet is sorted by raid zone, item, and character.  Not every item listed here necessarily requires a prio list assignment.  
+
+Remind players that winning items tagged "free" (on Raidify) with a Need roll or any item at all on a Greed roll never counts against them - gear up that team!
 
 ---
 
