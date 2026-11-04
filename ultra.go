@@ -198,7 +198,7 @@ func main() {
 	for i := range items {
 		itemMap[items[i].WowItemID] = &items[i]
 	}
-	log.Printf("Parsed %v items.\n", len(itemMap))
+	log.Printf("Parsed %v item entries.\n", len(itemMap))
 
 	// 4. Get Wishlists
 	wishlistEntries, err := FetchAllPages[WishlistEntry](client, baseURL, apiKey, "/wishlists", params)
@@ -247,10 +247,10 @@ func main() {
 	if err != nil {
 		log.Fatalf("Error fetching attendance history: %v", err)
 	}
-	log.Printf("Parsed %v entries from attendance history.\n", len(attendanceHistory))
+	log.Printf("Parsed %v attendance history entries.\n", len(attendanceHistory))
 
 	if len(attendanceHistory) == 0 || len(lootHistory) == 0 {
-		log.Println("Warning: No attendance or loot data from the past 6 months are available.")
+		log.Println("Warning: No attendance or loot history from the past 6 months are available.")
 	}
 
 	// Index Loot and Attendance by UserID for O(1) loop lookups
@@ -311,8 +311,10 @@ func main() {
 	}
 
 	if len(candidates) == 0 {
-		fmt.Println("No contentious wishlist items found.")
+		log.Println("No contentious wishlist items found.")
 		return
+	} else {
+		log.Printf("Sorting %v contentious item candidates.", len(candidates))
 	}
 
 	// 7. Sort Output using on-the-fly Item map lookups
@@ -392,7 +394,7 @@ func main() {
 		log.Fatalf("Error writing CSV file: %v", err)
 	}
 
-	fmt.Printf("Successfully generated ULTRA priority list: %s\n", outFilePath)
+	log.Printf("Successfully generated ULTRA priority list: %s\n", outFilePath)
 	if sendToDiscord && settings.DiscordWebhookURL != "" {
 		comment := "Automated output used by officers to generate prio lists (PLs) for contentious items."
 		msg := fmt.Sprintf("📊 **ULTRA Priority Report Generated** (`%s`)\n"+comment, fileName)
